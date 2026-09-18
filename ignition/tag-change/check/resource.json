@@ -1,0 +1,25 @@
+{
+  "scope": "G",
+  "version": 1,
+  "restricted": false,
+  "overridable": true,
+  "files": [
+    "onTagChange.py"
+  ],
+  "attributes": {
+    "changeTypes": [
+      "ValueChange",
+      "QualityChange",
+      "TimestampChange"
+    ],
+    "lastModificationSignature": "a571218d8987e9cb0afc763ee922a395051c7687f71680dee2b7e19aa12f65dd",
+    "paths": [
+      "[default]test"
+    ],
+    "lastModification": {
+      "actor": "anil",
+      "timestamp": "2026-08-19T09:07:34Z"
+    },
+    "enabled": true
+  }
+}

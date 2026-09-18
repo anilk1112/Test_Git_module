@@ -1,0 +1,267 @@
+{
+  "custom": {
+    "printerSettings": {
+      "copies": 1,
+      "orientation": "portrait",
+      "paperSize": "A4"
+    }
+  },
+  "params": {
+    "dryWeight": "2800 LB",
+    "itemNo": 318010,
+    "lot": "072326-P2-003",
+    "netWeight": "3200 LB",
+    "selectedPrinter": "Default_A4_Printer",
+    "shift": "D",
+    "time": "05:28",
+    "toteId": "Test 1"
+  },
+  "props": {
+    "defaultSize": {
+      "height": 621,
+      "width": 699
+    }
+  },
+  "root": {
+    "children": [
+      {
+        "children": [
+          {
+            "events": {
+              "component": {
+                "onActionPerformed": {
+                  "config": {
+                    "script": "\t# Report Parameters\n\treport_params \u003d {\n\t    \u0027itemNo\u0027: self.view.params.itemNo,\n\t    \u0027lot\u0027: self.view.params.lot,\n\t    \u0027toteId\u0027: self.view.params.toteId,\n\t    \u0027shift\u0027: self.view.params.shift,\n\t    \u0027time\u0027: self.view.params.time,\n\t    \u0027dryWeight\u0027: self.view.params.dryWeight,\n\t    \u0027netWeight\u0027: self.view.params.netWeight\n\t}\n\t\n\t# Hardcoded Printer Name\n\tprinter \u003d \"HP LaserJet M404\"\n\t\n\t# Current Project Name\n\tprojectName \u003d system.util.getProjectName()\n\t\n\tlogger \u003d system.util.getLogger(\"LabelPrinting\")\n\t\n\ttry:\n\t    logger.info(\"Starting Label Print\")\n\t    logger.info(\"Printer: %s\" % printer)\n\t    logger.info(\"Lot: %s\" % self.view.params.lot)\n\t\n\t    settings \u003d {\n\t        \"primaryPrinterName\": printer,\n\t        \"copies\": 1,\n\t        \"useRaster\": False\n\t    }\n\t\n\t    system.report.executeAndDistribute(\n\t        path\u003d\"LabelPrinting\",\n\t        project\u003dprojectName,\n\t        action\u003d\"print\",\n\t        actionSettings\u003dsettings,\n\t        parameters\u003dreport_params\n\t    )\n\t\n\t    logger.info(\"Label printed successfully\")\n\t\n\texcept Exception as e:\n\t    logger.error(\"Print Failed: %s\" % str(e))\n\t\n\t    # Fallback: Open Report PDF in Browser\n\t    self.requestPrint(\n\t        target\u003d\u0027LabelPrinting/Label\u0027,\n\t        documentTitle\u003d\u0027Label_\u0027 + str(self.view.params.lot)\n\t    )\n#\treport_params \u003d {\n#\t    \u0027itemNo\u0027: self.view.params.itemNo,\n#\t    \u0027lot\u0027: self.view.params.lot,\n#\t    \u0027toteId\u0027: self.view.params.toteId,\n#\t    \u0027shift\u0027: self.view.params.shift,\n#\t    \u0027time\u0027: self.view.params.time,\n#\t    \u0027dryWeight\u0027: self.view.params.dryWeight,\n#\t    \u0027netWeight\u0027: self.view.params.netWeight,\n#\t    \u0027totalWeight\u0027: self.view.params.totalWeight\n#\t}\n#\tprint\n#\tprinter \u003d self.view.params.selectedPrinter\n#\tproj \u003d system.util.getProjectName()\n#\t\n#\ttry:\n#\t    settings \u003d {\n#\t        \"primaryPrinterName\": printer,\n#\t        \"copies\": 1,\n#\t        \"useRaster\": False\n#\t    }\n#\t    system.report.executeAndDistribute(\n#\t        path\u003d\"LabelPrinting\",\n#\t        project\u003dproj,\n#\t        action\u003d\"print\",\n#\t        actionSettings\u003dsettings,\n#\t        parameters\u003dreport_params\n#\t    )\n#\texcept Exception as e:\n#\t    self.requestPrint(target\u003d\u0027LabelPrinting/Label\u0027, documentTitle\u003d\u0027Label_\u0027 + str(self.view.params.lot))"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              },
+              "dom": {
+                "onClick": {
+                  "config": {
+                    "script": "\treport_params \u003d {\n\t    \u0027itemNo\u0027: self.view.params.itemNo,\n\t    \u0027lot\u0027: self.view.params.lot,\n\t    \u0027toteId\u0027: self.view.params.toteId,\n\t    \u0027shift\u0027: self.view.params.shift,\n\t    \u0027time\u0027: self.view.params.time,\n\t    \u0027dryWeight\u0027: self.view.params.dryWeight,\n\t    \u0027netWeight\u0027: self.view.params.netWeight\n\t}\n\tprint\n\tprinter \u003d self.view.params.selectedPrinter\n\tproj \u003d system.util.getProjectName()\n\t\n\ttry:\n\t    settings \u003d {\n\t        \"primaryPrinterName\": printer,\n\t        \"copies\": 1,\n\t        \"useRaster\": False\n\t    }\n\t    system.report.executeAndDistribute(\n\t        path\u003d\"LabelPrinting\",\n\t        project\u003dproj,\n\t        action\u003d\"print\",\n\t        actionSettings\u003dsettings,\n\t        parameters\u003dreport_params\n\t    )\n\texcept Exception as e:\n\t    self.requestPrint(target\u003d\u0027LabelPrinting/Label\u0027, documentTitle\u003d\u0027Label_\u0027 + str(self.view.params.lot))"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Print_Button"
+            },
+            "position": {
+              "basis": "160px"
+            },
+            "props": {
+              "classes": "no-print",
+              "style": {
+                "backgroundColor": "#008599",
+                "borderRadius": "4px",
+                "color": "#ffffff",
+                "cursor": "pointer",
+                "fontSize": "13px",
+                "fontWeight": "bold",
+                "margin": "6px"
+              },
+              "text": "🖶 Print (A4)"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "events": {
+              "dom": {
+                "onClick": {
+                  "config": {
+                    "script": "\t# Report parameters\n\treport_params \u003d {\n\t    \u0027itemNo\u0027: str(self.view.params.itemNo),\n\t    \u0027lot\u0027: str(self.view.params.lot),\n\t    \u0027toteId\u0027: str(self.view.params.toteId),\n\t    \u0027shift\u0027: str(self.view.params.shift),\n\t    \u0027time\u0027: str(self.view.params.time),\n\t    \u0027dryWeight\u0027: str(self.view.params.dryWeight),\n\t    \u0027netWeight\u0027: str(self.view.params.netWeight)\n\t}\n\t\n\t# Project name-ah hardcode panradhu dhaan best (None error varadhu)\n\tproj \u003d \"IKOLabel\"\n#\t\"WatchTower_DeleteDBConfig\"\n\tfilename \u003d \"Tote_Label_\" + str(self.view.params.lot)\n\t\n\ttry:\n\t    # PDF generate panrom\n\t    pdf_bytes \u003d system.report.executeReport(\n\t        path\u003d\"LabelPrinting\",\n\t        project\u003dproj,\n\t        parameters\u003dreport_params,\n\t        fileType\u003d\"pdf\"\n\t    )\n\t    \n\t    # Download trigger panrom\n\t    system.perspective.download(\n\t        filename\u003dfilename + \".pdf\",\n\t        data\u003dpdf_bytes,\n\t        contentType\u003d\"application/pdf\"\n\t    )\n\t    system.perspective.print(\"PDF Download triggered successfully!\")\n\t\n\texcept Exception as e:\n\t    # Error vantha browser console and gateway log-la print aagum\n\t    system.perspective.print(\"Download Error: \" + str(e))"
+                  },
+                  "scope": "G",
+                  "type": "script"
+                }
+              }
+            },
+            "meta": {
+              "name": "Download_Button"
+            },
+            "position": {
+              "basis": "170px"
+            },
+            "props": {
+              "classes": "no-print",
+              "style": {
+                "backgroundColor": "#2e7d32",
+                "borderRadius": "4px",
+                "color": "#ffffff",
+                "cursor": "pointer",
+                "fontSize": "13px",
+                "fontWeight": "bold",
+                "margin": "6px"
+              },
+              "text": "⬇ Download PDF"
+            },
+            "type": "ia.input.button"
+          },
+          {
+            "meta": {
+              "name": "Printer_Name_Input"
+            },
+            "position": {
+              "basis": "220px"
+            },
+            "propConfig": {
+              "props.value": {
+                "binding": {
+                  "config": {
+                    "bidirectional": true,
+                    "path": "view.params.selectedPrinter"
+                  },
+                  "type": "property"
+                }
+              }
+            },
+            "props": {
+              "classes": "no-print",
+              "placeholder": "Printer Name (e.g. Office_A4)",
+              "style": {
+                "fontSize": "12px",
+                "margin": "6px"
+              }
+            },
+            "type": "ia.input.text-field"
+          },
+          {
+            "meta": {
+              "name": "Printer_Info"
+            },
+            "position": {
+              "basis": "260px"
+            },
+            "propConfig": {
+              "props.text": {
+                "binding": {
+                  "config": {
+                    "expression": "\"A4 Sheet  •  Lot: \" + {view.params.lot}"
+                  },
+                  "type": "expr"
+                }
+              }
+            },
+            "props": {
+              "classes": "no-print",
+              "style": {
+                "alignItems": "center",
+                "color": "#555555",
+                "display": "flex",
+                "fontFamily": "sans-serif",
+                "fontSize": "12px",
+                "fontStyle": "italic",
+                "margin": "6px"
+              }
+            },
+            "type": "ia.display.label"
+          }
+        ],
+        "meta": {
+          "name": "Toolbar"
+        },
+        "position": {
+          "basis": "52px"
+        },
+        "props": {
+          "style": {
+            "alignItems": "center",
+            "backgroundColor": "#f8f9fa",
+            "borderBottom": "1px solid #e2e8f0"
+          }
+        },
+        "type": "ia.container.flex"
+      },
+      {
+        "meta": {
+          "name": "ReportViewer"
+        },
+        "position": {
+          "basis": "580px",
+          "grow": 1
+        },
+        "propConfig": {
+          "props.params.dryWeight": {
+            "binding": {
+              "config": {
+                "path": "view.params.dryWeight"
+              },
+              "type": "property"
+            }
+          },
+          "props.params.itemNo": {
+            "binding": {
+              "config": {
+                "path": "view.params.itemNo"
+              },
+              "transforms": [
+                {
+                  "code": "\treturn int(value)",
+                  "type": "script"
+                }
+              ],
+              "type": "property"
+            }
+          },
+          "props.params.lot": {
+            "binding": {
+              "config": {
+                "path": "view.params.lot"
+              },
+              "type": "property"
+            }
+          },
+          "props.params.netWeight": {
+            "binding": {
+              "config": {
+                "path": "view.params.netWeight"
+              },
+              "type": "property"
+            }
+          },
+          "props.params.shift": {
+            "binding": {
+              "config": {
+                "path": "view.params.shift"
+              },
+              "type": "property"
+            }
+          },
+          "props.params.time": {
+            "binding": {
+              "config": {
+                "path": "view.params.time"
+              },
+              "type": "property"
+            }
+          },
+          "props.params.toteId": {
+            "binding": {
+              "config": {
+                "path": "view.params.toteId"
+              },
+              "type": "property"
+            }
+          }
+        },
+        "props": {
+          "page": 1,
+          "pageCount": 1,
+          "source": "LabelPrinting"
+        },
+        "type": "ia.reporting.report-viewer"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "props": {
+      "direction": "column"
+    },
+    "type": "ia.container.flex"
+  }
+}

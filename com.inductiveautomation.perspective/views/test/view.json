@@ -1,0 +1,51 @@
+{
+  "custom": {},
+  "params": {},
+  "props": {},
+  "root": {
+    "children": [
+      {
+        "events": {
+          "component": {
+            "onActionPerformed": {
+              "config": {
+                "script": "\tfrom java.io import ByteArrayOutputStream\n\tfrom org.apache.poi.xssf.usermodel import XSSFWorkbook, XSSFCellStyle\n\tfrom org.apache.poi.ss.util import CellRangeAddress\n\tfrom org.apache.poi.ss.usermodel import *\n\timport system\n\t\n\t# Get your data\n\tdata \u003d system.db.runNamedQuery(\u0027KPI/DowntimeSchedule/Get_PlannedScheduleType\u0027)\n\ttypeList \u003d data.getColumnAsList(0)\n\t\n\t# Create workbook\n\twb \u003d XSSFWorkbook()\n\tws \u003d wb.createSheet(\"Downtime Schedule\")\n\t\n\t# Headers\n\theaders \u003d [\"Line\", \"Planned\", \"B\", \"C\", \"A\"]\n\theaderRow \u003d ws.createRow(0)\n\theaderStyle \u003d wb.createCellStyle()\n\theaderFont \u003d wb.createFont()\n\theaderFont.setBold(True)\n\theaderStyle.setFont(headerFont)\n\theaderStyle.setAlignment(HorizontalAlignment.CENTER)\n\theaderStyle.setVerticalAlignment(VerticalAlignment.CENTER)\n\t\n\tfor col, header in enumerate(headers):\n\t    cell \u003d headerRow.createCell(col)\n\t    cell.setCellValue(header)\n\t    cell.setCellStyle(headerStyle)\n\t\n\t# Build data with LINE headers\n\tcurrentRow \u003d 1\n\tfor line in range(1, 9):  # Lines 1-8\n\t    \n\t    # Add LINE header row (merged A:E)\n\t    headerRow \u003d ws.createRow(currentRow)\n\t    ws.addMergedRegion(CellRangeAddress(currentRow, currentRow, 0, 4))\n\t    \n\t    lineCell \u003d headerRow.createCell(0)\n\t    lineCell.setCellValue(\"LINE \" + str(line))\n\t    \n\t    # Style for LINE header\n\t    lineStyle \u003d wb.createCellStyle()\n\t    lineFont \u003d wb.createFont()\n\t    lineFont.setBold(True)\n\t    lineFont.setFontHeightInPoints(14)\n\t    lineStyle.setFont(lineFont)\n\t    lineStyle.setAlignment(HorizontalAlignment.CENTER)\n\t    lineStyle.setVerticalAlignment(VerticalAlignment.CENTER)\n\t    lineStyle.setFillForegroundColor(IndexedColors.LIGHT_BLUE.index)\n\t    lineStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND)\n\t    lineCell.setCellStyle(lineStyle)\n\t    \n\t    currentRow +\u003d 1\n\t    \n\t    # Add planned downtime rows for this line\n\t    for pType in typeList:\n\t        dataRow \u003d ws.createRow(currentRow)\n\t        dataRow.createCell(0).setCellValue(line)\n\t        dataRow.createCell(1).setCellValue(pType)\n\t        dataRow.createCell(2).setCellValue(0)\n\t        dataRow.createCell(3).setCellValue(0)\n\t        dataRow.createCell(4).setCellValue(0)\n\t        currentRow +\u003d 1\n\t    \n\t    # Blank separator row\n\t    blankRow \u003d ws.createRow(currentRow)\n\t    currentRow +\u003d 1\n\t\n\t# Auto-size columns\n\tfor col in range(len(headers)):\n\t    ws.autoSizeColumn(col)\n\t\n\t# Save to bytes\n\toutputStream \u003d ByteArrayOutputStream()\n\twb.write(outputStream)\n\texcelBytes \u003d outputStream.toByteArray()\n\toutputStream.close()\n\twb.close()\n\t\n\t# Download\n\tfileName \u003d system.date.format(system.date.now(), \u0027YYYYMMdd\u0027) + \u0027_DowntimeScheduleTemplate.xlsx\u0027\n\tsystem.perspective.download(fileName, excelBytes)"
+              },
+              "scope": "G",
+              "type": "script"
+            }
+          }
+        },
+        "meta": {
+          "name": "Button"
+        },
+        "position": {
+          "height": 34,
+          "width": 80,
+          "x": 349,
+          "y": 308
+        },
+        "type": "ia.input.button"
+      },
+      {
+        "meta": {
+          "name": "Checkbox"
+        },
+        "position": {
+          "height": 36,
+          "width": 56,
+          "x": 536,
+          "y": 220
+        },
+        "props": {
+          "textPosition": "left"
+        },
+        "type": "ia.input.checkbox"
+      }
+    ],
+    "meta": {
+      "name": "root"
+    },
+    "type": "ia.container.coord"
+  }
+}
