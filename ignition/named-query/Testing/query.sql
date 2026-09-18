@@ -1,1 +1,1 @@
-select sysdatetime
+select sysdatetime()

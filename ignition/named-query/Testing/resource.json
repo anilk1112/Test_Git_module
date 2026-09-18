@@ -16,9 +16,9 @@
     "enabled": true,
     "cacheAmount": 1,
     "cacheEnabled": false,
-    "database": "",
+    "database": "DB",
     "fallbackEnabled": false,
-    "lastModificationSignature": "bbc05e69f4e58c12057cfecfb7e17661c07250079a729fdd5d7874088ffb3427",
+    "lastModificationSignature": "a815ffd24fcdad3f2b3ee3c53038e4f8ee8e5fc2bb9cb897a76602ff1f5beb4c",
     "permissions": [
       {
         "zone": "",
@@ -27,7 +27,7 @@
     ],
     "lastModification": {
       "actor": "anil",
-      "timestamp": "2026-09-18T04:52:29Z"
+      "timestamp": "2026-09-18T05:21:40Z"
     },
     "parameters": [
       {
