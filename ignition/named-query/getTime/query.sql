@@ -1,1 +1,1 @@
-select cast(sysdatetime() as time)
+select cast(sysdatetime() as time) as time
