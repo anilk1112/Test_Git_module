@@ -1,0 +1,1 @@
+select cast(sysdatetime() as time)
